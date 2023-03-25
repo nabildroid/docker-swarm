@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  back:
+    ports:
+      - 3001:2222
+    build:
+      context: ./backend
+      args:
+        DATABASE_URL: mysql://app:123456789@db:3306/arib
+    environment:
+      - DATABASE_URL=mysql://app:123456789@db:3306/arib
+    depends_on:
+      - db
+    networks:
+      - db-slave
+      - api-connect
+    restart: always
+  
+  db: 
+    build: ./database
+    networks:
+      - db-slave
+
+    
+  front:
+    depends_on:
+      - back
+      - db
+    environment:
+      - API=http://back:2222
+    build:
+      context: ./frontend
+      args:
+        API: http://back:2222
+    ports:
+      - 8080:3000
+    networks:
+      - api-connect
+
+    restart: always
+  
+  
+    
+networks:
+  db-slave:
+  api-connect:
