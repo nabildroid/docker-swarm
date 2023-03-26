@@ -1,4 +1,5 @@
 import Express from "express";
+import { PrismaClient } from './generated/prisma-client/index.js'
 
 import Cors from "cors";
 const app = Express();
@@ -7,12 +8,8 @@ app.use(Cors({
     origin: "*"
 }))
 
+const prisma = new PrismaClient()
 
-
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient({
-    
-})
 
 
 

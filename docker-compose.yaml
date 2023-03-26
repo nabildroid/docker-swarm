@@ -23,6 +23,7 @@ services:
     build: ./database
     networks:
       - db-slave
+    
 
     
   front:
@@ -54,7 +55,7 @@ services:
       - "8080:80"
     networks:
       - lb-front
-    restart: 
+    restart: always
     
 networks:
   db-slave:
